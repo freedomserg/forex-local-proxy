@@ -5,7 +5,6 @@ import forex.domain.Rate.Pair
 import forex.domain._
 import io.circe._
 import io.circe.generic.semiauto._
-import io.circe.java8.time._
 
 object Protocol {
 
@@ -26,6 +25,10 @@ object Protocol {
 
   implicit val pairEncoder: Encoder[Pair] =
     deriveEncoder[Pair]
+
+  implicit val priceEncoder: Encoder[Price] = deriveEncoder[Price]
+
+  implicit val timestampEncoder: Encoder[Timestamp] = deriveEncoder[Timestamp]
 
   implicit val rateEncoder: Encoder[Rate] =
     deriveEncoder[Rate]
