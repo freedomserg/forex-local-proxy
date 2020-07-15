@@ -37,6 +37,7 @@ libraryDependencies ++= Seq(
   Libraries.fs2,
   Libraries.http4sDsl,
   Libraries.http4sServer,
+  Libraries.http4sClient,
   Libraries.http4sCirce,
   Libraries.circeCore,
   Libraries.circeGeneric,
@@ -44,8 +45,12 @@ libraryDependencies ++= Seq(
   Libraries.circeParser,
   Libraries.circeJava8,
   Libraries.pureConfig,
+  Libraries.scalaCacheCaffeine,
+  Libraries.scalaCacheCatsEffect,
+  Libraries.resilience4j,
   Libraries.logback,
   Libraries.scalaTest        % Test,
   Libraries.scalaCheck       % Test,
-  Libraries.catsScalaCheck   % Test
+  Libraries.catsScalaCheck   % Test,
+  Libraries.scalaTestPlus    % Test
 )
