@@ -1,15 +1,20 @@
 package forex.programs.rates
 
-import forex.services.rates.errors.{ Error => RatesServiceError }
+import forex.services.rates.errors.ServiceError
+import forex.services.rates.errors.ServiceError.OneFrameLookupFailed
 
 object errors {
 
-  sealed trait Error extends Exception
+  sealed trait Error {
+    val msg: String
+  }
   object Error {
+    final case class GeneralError(msg: String) extends Error
     final case class RateLookupFailed(msg: String) extends Error
+    final case class CurrencyNotSupported(msg: String) extends Error
   }
 
-  def toProgramError(error: RatesServiceError): Error = error match {
-    case RatesServiceError.OneFrameLookupFailed(msg) => Error.RateLookupFailed(msg)
+  def toProgramError(error: ServiceError): Error = error match {
+    case OneFrameLookupFailed(msg) => Error.RateLookupFailed(msg)
   }
 }
