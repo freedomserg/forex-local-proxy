@@ -17,7 +17,7 @@ class GetRateRequestLimiter[F[_] : Applicative, R, T]
         RateLimiter.waitForPermission(rateLimiter)
         function1.apply(t).value
       } catch {
-        case e: RequestNotPermitted => Either.left[ClientError, R](RateLimitExceeded(e.getMessage)).pure[F]
+        case _: RequestNotPermitted => Either.left[ClientError, R](RateLimitExceeded).pure[F]
         case e: Throwable => Either.left[ClientError, R](RateRequestFailed(e.getMessage)).pure[F]
       }
     )

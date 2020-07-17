@@ -42,9 +42,7 @@ class OneFrameLive[F[_] : Monad](ratesCache: RatesCacheAlgebra[F],
     }
   }
 
-  private def writeToCache(rate: Rate, key: String): EitherT[F, ServiceError, Rate] = {
-    EitherT(ratesCache.put(key, rate))
-  }
+  private def writeToCache(rate: Rate, key: String): EitherT[F, ServiceError, Rate] = EitherT(ratesCache.put(key, rate))
 
   private def apiResponseAsRate(apiResp: ExternalGetApiResponse): EitherT[F, ServiceError, Rate] = {
     val apiTimestampStr = apiResp.time_stamp.replace("Z", "")

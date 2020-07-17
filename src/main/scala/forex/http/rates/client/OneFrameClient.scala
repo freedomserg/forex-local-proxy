@@ -7,7 +7,7 @@ import forex.config.ExternalRatesServiceConfig
 import forex.domain.Rate
 import forex.http.rates.ExternalProtocol.ExternalGetApiResponse
 import forex.http.rates.client.errors.ClientError
-import forex.http.rates.client.errors.ClientError.RateRequestFailed
+import forex.http.rates.client.errors.ClientError.{ExchangeRateNotFound, RateRequestFailed}
 import org.http4s.Method.GET
 import org.http4s.Uri.{Authority, RegName, Scheme}
 import org.http4s.client.Client
@@ -15,14 +15,14 @@ import org.http4s.client.dsl.Http4sClientDsl
 import org.http4s.{Status, _}
 
 class OneFrameClient[F[_] : Sync](httpClient: Client[F],
-                                  externalProviderConfig: ExternalRatesServiceConfig) extends Http4sClientDsl[F] {
+                                  externalRatesServiceConfig: ExternalRatesServiceConfig) extends Http4sClientDsl[F] {
   private val GET_RATES_PATH = "/rates"
 
   def get(pair: Rate.Pair): EitherT[F, ClientError, ExternalGetApiResponse] = {
-    val host = externalProviderConfig.host
-    val port = externalProviderConfig.port
-    val tokenName = externalProviderConfig.authTokenName
-    val tokenValue = externalProviderConfig.authTokenValue
+    val host = externalRatesServiceConfig.host
+    val port = externalRatesServiceConfig.port
+    val tokenName = externalRatesServiceConfig.authTokenName
+    val tokenValue = externalRatesServiceConfig.authTokenValue
     val pairValue = s"${pair.from}${pair.to}"
 
     val uri = Uri(
@@ -45,7 +45,7 @@ class OneFrameClient[F[_] : Sync](httpClient: Client[F],
                 list match {
                   case head :: _ => Either.right[ClientError, ExternalGetApiResponse](head)
                   case Nil =>
-                    Either.left[ClientError, ExternalGetApiResponse](RateRequestFailed(s"Could not find exchange rate for $pairValue"))
+                    Either.left[ClientError, ExternalGetApiResponse](ExchangeRateNotFound(s"Could not find exchange rate for ${pair.from} / ${pair.to}"))
                 }
               )
             }

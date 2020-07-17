@@ -5,7 +5,7 @@ object Dependencies {
   object Versions {
     val cats                = "2.1.0"
     val catsEffect          = "2.0.0"
-    val fs2                 = "2.1.0"
+    val fs2                 = "1.0.5"
     val http4s              = "0.20.15"
     val circe               = "0.11.1"
     val pureConfig          = "0.12.1"
@@ -17,7 +17,6 @@ object Dependencies {
     val scalaCheck          = "1.14.3"
     val scalaTest           = "3.1.0"
     val catsScalaCheck      = "0.2.0"
-    val scalaTestPlus       = "3.2.0.0"
   }
 
   object Libraries {
@@ -52,7 +51,6 @@ object Dependencies {
     lazy val scalaTest           = "org.scalatest"         %% "scalatest"                  % Versions.scalaTest
     lazy val scalaCheck          = "org.scalacheck"        %% "scalacheck"                 % Versions.scalaCheck
     lazy val catsScalaCheck      = "io.chrisdavenport"     %% "cats-scalacheck"            % Versions.catsScalaCheck
-    lazy val scalaTestPlus       = "org.scalatestplus"     %% "scalacheck-1-14"            % Versions.scalaTestPlus
   }
 
 }

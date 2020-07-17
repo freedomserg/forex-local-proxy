@@ -3,7 +3,7 @@ package forex.http.rates
 import cats.implicits._
 import forex.domain.Currency
 import forex.programs.rates.errors.Error
-import forex.programs.rates.errors.Error.{CurrencyNotSupported, GeneralError}
+import forex.programs.rates.errors.Error.{CurrencyNotSupported, GeneralProgramError}
 import org.http4s.QueryParamDecoder
 import org.http4s.dsl.impl.QueryParamDecoderMatcher
 
@@ -18,7 +18,7 @@ object QueryParams {
         case Failure(_: MatchError) =>
           Either.left[Error, Currency](CurrencyNotSupported(s"Exchange rate for $currencyStr is not supported"))
         case Failure(_: Throwable) =>
-          Either.left[Error, Currency](GeneralError("Unexpected internal error happened. Please, try again"))
+          Either.left[Error, Currency](GeneralProgramError("Unexpected internal error happened. Please, try again"))
       }
     }
   }
